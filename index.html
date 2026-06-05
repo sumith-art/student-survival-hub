@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Survival Hub - Your Productivity Partner</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-brand">
+                <div class="brand-icon">
+                    <i data-lucide="graduation-cap"></i>
+                </div>
+                <span>Survival Hub</span>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="nav-link active" data-tab="dashboard">
+                    <i data-lucide="layout-dashboard"></i>
+                    <span>Dashboard</span>
+                </a>
+                <a href="#timer" class="nav-link" data-tab="timer">
+                    <i data-lucide="timer"></i>
+                    <span>Study Timer</span>
+                </a>
+                <a href="#tasks" class="nav-link" data-tab="tasks">
+                    <i data-lucide="check-square"></i>
+                    <span>Task Manager</span>
+                </a>
+                <a href="#exams" class="nav-link" data-tab="exams">
+                    <i data-lucide="calendar"></i>
+                    <span>Exams</span>
+                </a>
+                <a href="#attendance" class="nav-link" data-tab="attendance">
+                    <i data-lucide="award"></i>
+                    <span>Attendance</span>
+                </a>
+                <a href="#notes" class="nav-link" data-tab="notes">
+                    <i data-lucide="sticky-note"></i>
+                    <span>Notes Vault</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button id="theme-toggle" class="theme-btn" title="Toggle Theme">
+                    <i data-lucide="moon" class="dark-icon"></i>
+                    <i data-lucide="sun" class="light-icon" style="display: none;"></i>
+                    <span class="theme-text">Dark Mode</span>
+                </button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="app-header">
+                <button class="mobile-menu-toggle" id="mobile-toggle" aria-label="Toggle Navigation Menu">
+                    <i data-lucide="menu"></i>
+                </button>
+                <div class="header-info">
+                    <h1 id="greeting-title">Hello, Student! 👋</h1>
+                    <p class="current-date" id="current-date">Friday, June 5, 2026</p>
+                </div>
+            </header>
+
+            <div class="content-body">
+                <!-- 1. DASHBOARD PANEL -->
+                <section id="dashboard" class="tab-panel active">
+                    <!-- Banner -->
+                    <div class="dashboard-banner">
+                        <div class="banner-text">
+                            <h2>Welcome back to your Study Desk!</h2>
+                            <p>Track your productivity, lock in study sprints, manage exams, and review your notes all in one place.</p>
+                        </div>
+                        <div class="banner-illustration">
+                            <i data-lucide="sparkles" class="floating-sparkle"></i>
+                        </div>
+                    </div>
+
+                    <!-- Statistics Grid -->
+                    <div class="stats-grid">
+                        <div class="stat-card blue">
+                            <div class="stat-icon"><i data-lucide="hourglass"></i></div>
+                            <div class="stat-info">
+                                <span class="stat-label">Total Study Time</span>
+                                <h3 id="stat-study-time">0h 0m</h3>
+                            </div>
+                        </div>
+                        <div class="stat-card purple">
+                            <div class="stat-icon"><i data-lucide="clipboard-list"></i></div>
+                            <div class="stat-info">
+                                <span class="stat-label">Pending Tasks</span>
+                                <h3 id="stat-pending-tasks">0</h3>
+                            </div>
+                        </div>
+                        <div class="stat-card emerald">
+                            <div class="stat-icon"><i data-lucide="percent"></i></div>
+                            <div class="stat-info">
+                                <span class="stat-label">Attendance Rate</span>
+                                <h3 id="stat-attendance">0%</h3>
+                            </div>
+                        </div>
+                        <div class="stat-card coral">
+                            <div class="stat-icon"><i data-lucide="calendar-days"></i></div>
+                            <div class="stat-info">
+                                <span class="stat-label">Days to Next Exam</span>
+                                <h3 id="stat-next-exam">None</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dashboard Widgets -->
+                    <div class="dashboard-widgets">
+                        <!-- Left Widget: Tasks Summary -->
+                        <div class="widget-card">
+                            <div class="widget-header">
+                                <h3><i data-lucide="check-square"></i> Urgent Tasks</h3>
+                                <a href="#tasks" class="widget-link" data-go-tab="tasks">View All</a>
+                            </div>
+                            <div class="widget-content">
+                                <ul id="dash-tasks-list" class="dash-list">
+                                    <!-- Dynamic -->
+                                </ul>
+                            </div>
+                        </div>
+
+                        <!-- Right Widget: Exams / Attendance Summary -->
+                        <div class="widget-card">
+                            <div class="widget-header">
+                                <h3><i data-lucide="calendar"></i> Upcoming Exams</h3>
+                                <a href="#exams" class="widget-link" data-go-tab="exams">View All</a>
+                            </div>
+                            <div class="widget-content">
+                                <div id="dash-exams-list" class="dash-list">
+                                    <!-- Dynamic -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 2. STUDY SPRINT (POMODORO TIMER) PANEL -->
+                <section id="timer" class="tab-panel">
+                    <div class="panel-header">
+                        <h2>Study Sprint</h2>
+                        <p>Lock in focus sessions and build your habits. Completing focus sessions automatically updates your study hours.</p>
+                    </div>
+
+                    <div class="timer-container">
+                        <div class="timer-display-card">
+                            <div class="timer-type-selector">
+                                <button id="btn-focus-mode" class="timer-type-btn active">Focus (25m)</button>
+                                <button id="btn-break-mode" class="timer-type-btn">Short Break (5m)</button>
+                            </div>
+                            
+                            <div class="timer-progress-wrapper">
+                                <svg class="timer-svg" viewBox="0 0 200 200">
+                                    <circle class="timer-bg-circle" cx="100" cy="100" r="85"></circle>
+                                    <circle id="timer-progress-bar" class="timer-progress-circle" cx="100" cy="100" r="85"></circle>
+                                </svg>
+                                <div class="timer-text-content">
+                                    <span id="timer-status-text">FOCUSING</span>
+                                    <div id="timer-time">25:00</div>
+                                </div>
+                            </div>
+
+                            <div class="timer-controls">
+                                <button id="timer-start" class="btn btn-primary btn-large">
+                                    <i data-lucide="play"></i> Start
+                                </button>
+                                <button id="timer-pause" class="btn btn-secondary btn-large" style="display: none;">
+                                    <i data-lucide="pause"></i> Pause
+                                </button>
+                                <button id="timer-reset" class="btn btn-danger btn-large">
+                                    <i data-lucide="rotate-ccw"></i> Reset
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Stats Card -->
+                        <div class="timer-stats-card">
+                            <h3>Session Insights</h3>
+                            <div class="insights-grid">
+                                <div class="insight-box">
+                                    <span class="insight-num" id="insight-sessions">0</span>
+                                    <span class="insight-label">Sessions Completed</span>
+                                </div>
+                                <div class="insight-box">
+                                    <span class="insight-num" id="insight-hours">0m</span>
+                                    <span class="insight-label">Time Logged Today</span>
+                                </div>
+                            </div>
+                            <div class="timer-history">
+                                <h4>Sprint Logs</h4>
+                                <ul id="timer-logs-list" class="sprint-logs-list">
+                                    <!-- Dynamic -->
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 3. TASK MANAGER PANEL -->
+                <section id="tasks" class="tab-panel">
+                    <div class="panel-header">
+                        <h2>Task Manager</h2>
+                        <p>Stay on top of your assignments, lab reports, and projects.</p>
+                    </div>
+
+                    <div class="task-grid-layout">
+                        <!-- Add Task Card -->
+                        <div class="card-form-sticky">
+                            <div class="card shadow-premium">
+                                <h3><i data-lucide="plus-circle"></i> Create New Task</h3>
+                                <form id="task-form" class="standard-form">
+                                    <div class="form-group">
+                                        <label for="task-title">Task Description</label>
+                                        <input type="text" id="task-title" placeholder="e.g. Complete Calculus Assignment 3" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="task-priority">Priority Level</label>
+                                        <select id="task-priority">
+                                            <option value="high">🔴 High Priority</option>
+                                            <option value="medium" selected>🟡 Medium Priority</option>
+                                            <option value="low">🟢 Low Priority</option>
+                                        </select>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-full">
+                                        <i data-lucide="plus"></i> Add Task
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Task List Area -->
+                        <div class="task-list-container">
+                            <div class="list-header-actions">
+                                <div class="filter-buttons">
+                                    <button class="filter-btn active" data-filter="all">All</button>
+                                    <button class="filter-btn" data-filter="pending">Pending</button>
+                                    <button class="filter-btn" data-filter="completed">Completed</button>
+                                </div>
+                                <span class="task-count" id="task-summary-count">0 tasks pending</span>
+                            </div>
+                            <div class="tasks-list" id="tasks-list">
+                                <!-- Dynamic -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 4. EXAM COUNTDOWN PANEL -->
+                <section id="exams" class="tab-panel">
+                    <div class="panel-header">
+                        <h2>Exam Countdown</h2>
+                        <p>Keep track of exams, papers, and presentations, showing countdown timers for each.</p>
+                    </div>
+
+                    <div class="exam-layout">
+                        <!-- Add Exam Form Card -->
+                        <div class="card-form-sticky">
+                            <div class="card shadow-premium">
+                                <h3><i data-lucide="plus-circle"></i> Add Exam Schedule</h3>
+                                <form id="exam-form" class="standard-form">
+                                    <div class="form-group">
+                                        <label for="exam-title">Subject / Exam Title</label>
+                                        <input type="text" id="exam-title" placeholder="e.g. Physics Midterm" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="exam-date">Exam Date</label>
+                                        <input type="date" id="exam-date" required>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-full">
+                                        <i data-lucide="plus"></i> Add Exam
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Exams Display List -->
+                        <div class="exams-display-area">
+                            <div class="exams-grid" id="exams-grid">
+                                <!-- Dynamic -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 5. ATTENDANCE TRACKER PANEL -->
+                <section id="attendance" class="tab-panel">
+                    <div class="panel-header">
+                        <h2>Attendance Tracker</h2>
+                        <p>Maintain your class attendance. Ensure you stay above your threshold (e.g. 75%).</p>
+                    </div>
+
+                    <div class="attendance-layout">
+                        <!-- Add Subject Card -->
+                        <div class="card-form-sticky">
+                            <div class="card shadow-premium">
+                                <h3><i data-lucide="plus-circle"></i> Add Subject</h3>
+                                <form id="attendance-form" class="standard-form">
+                                    <div class="form-group">
+                                        <label for="subject-name">Subject Name</label>
+                                        <input type="text" id="subject-name" placeholder="e.g. Introduction to Programming" required>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="attended-classes">Attended Classes</label>
+                                            <input type="number" id="attended-classes" min="0" value="0" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="total-classes">Conducted Classes</label>
+                                            <input type="number" id="total-classes" min="0" value="0" required>
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-full">
+                                        <i data-lucide="plus"></i> Add Subject
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Subjects Grid -->
+                        <div class="subjects-display-area">
+                            <div class="subjects-grid" id="subjects-grid">
+                                <!-- Dynamic -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- 6. NOTES VAULT PANEL -->
+                <section id="notes" class="tab-panel">
+                    <div class="panel-header">
+                        <h2>Notes Vault</h2>
+                        <p>Create, view, and organize quick revision notes. Filter by subject easily.</p>
+                    </div>
+
+                    <div class="notes-layout">
+                        <!-- Form Section -->
+                        <div class="card-form-sticky">
+                            <div class="card shadow-premium" id="note-editor-card">
+                                <h3 id="note-form-title"><i data-lucide="plus-circle"></i> Create New Note</h3>
+                                <form id="note-form" class="standard-form">
+                                    <input type="hidden" id="note-id" value="">
+                                    <div class="form-group">
+                                        <label for="note-title">Title</label>
+                                        <input type="text" id="note-title" placeholder="e.g. Newton's Third Law" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="note-subject">Subject</label>
+                                        <input type="text" id="note-subject" placeholder="e.g. Physics" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="note-content">Note Content</label>
+                                        <textarea id="note-content" placeholder="Type notes details here..." rows="6" required></textarea>
+                                    </div>
+                                    <div class="form-actions-row">
+                                        <button type="button" id="btn-cancel-edit" class="btn btn-secondary" style="display: none;">Cancel</button>
+                                        <button type="submit" id="btn-save-note" class="btn btn-primary">Save Note</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Notes Grid & Filters -->
+                        <div class="notes-display-area">
+                            <div class="notes-filter-bar">
+                                <span class="filter-label">Filter Subject:</span>
+                                <div class="notes-filters" id="notes-subjects-filter">
+                                    <!-- Dynamic subject tags -->
+                                </div>
+                            </div>
+                            <div class="notes-grid" id="notes-grid">
+                                <!-- Dynamic -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <!-- Alert toast notification -->
+    <div id="toast" class="toast">
+        <i id="toast-icon" data-lucide="info"></i>
+        <span id="toast-message">Success!</span>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
